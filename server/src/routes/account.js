@@ -3,12 +3,12 @@ require("dotenv").config()
 const router = express.Router()
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const {Users} = require("../model")
+const {User} = require("../model")
 const { verifyJWT } = require("../utils")
 
 router.post("/signup", async (req, res) => {
   const {username, password} = req.body
-  const checkUsername = await Users.find({username})
+  const checkUsername = await User.find({username})
   if(checkUsername.length > 0) {
     res.status(500).send({message: "Username already exist"})
     return
@@ -16,7 +16,7 @@ router.post("/signup", async (req, res) => {
   const salt = await bcrypt.genSalt(10)
   const hashPass = await bcrypt.hash(password, salt)
 
-  const result = await Users.insertMany({username, password: hashPass})
+  const result = await User.insertMany({username, password: hashPass})
 
   if(result) {
     res.status(200).send({message: "Successfully signup"})
@@ -27,7 +27,7 @@ router.post("/signup", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const {username, password} = req.body
-  const result = await Users.find({username})
+  const result = await User.find({username})
 
   if(result.length > 0 && await bcrypt.compare(password, result[0].password)) {
     const token = jwt.sign({username}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30d"})

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const { Schema } = mongoose
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -8,33 +9,19 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  collection: {
+    type: Schema.Types.ObjectId,
+    ref: "Gallery"
   }
 })
 
-const productSchema = new mongoose.Schema({
+const gallerySchema = new mongoose.Schema({
   name: {
-    type: String
-  },
-  username: {
-    type: String
-  },
-  description: {
     type: String
   },
   image: {
     type: String
-  },
-  type: {
-    type: String
-  },
-  expiration_date: {
-    type: String
-  },
-  price: {
-    type: String
-  },
-  active: {
-    type: Boolean
   },
   date: {
     type: Date
@@ -42,6 +29,6 @@ const productSchema = new mongoose.Schema({
 })
 
 module.exports = {
-  Users: mongoose.model('user', userSchema),
-  Product: mongoose.model('product', productSchema),
+  User: mongoose.model('User', userSchema),
+  Gallery: mongoose.model('Gallery', gallerySchema),
 }

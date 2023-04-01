@@ -7,7 +7,7 @@ const server = http.createServer(app)
 const cors = require("cors")
 const connectDB = require("./config/db")
 const accountRoutes = require("./routes/account")
-const productRoutes = require("./routes/product")
+const productRoutes = require("./routes/gallery")
 
 connectDB()
 
