@@ -6,10 +6,10 @@ const router = express.Router()
 router.get('/getImages', verifyJWT, async (req, res) => {
   const { _id } = req.query 
 
-  const result = await Gallery.findOne({user:_id})
+  const result = await Gallery.findOne({user:_id}).populate({path: "user", select: "-password"})
 
   if(result) {
-    res.status(200).send({ message: result })
+    res.status(200).send({ result })
   } else {
     res.status(200).send({ message: "Error Get Image" })
   }
@@ -17,7 +17,6 @@ router.get('/getImages', verifyJWT, async (req, res) => {
 
 router.post("/addImage", verifyJWT, async (req, res) => {
   const { _id, collectionImages } = req.body 
-  console.log(collectionImages)
   try {
     const result = await Gallery.findOneAndUpdate(
       { user: _id },
