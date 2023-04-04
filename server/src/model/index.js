@@ -9,23 +9,22 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
-  },
-  collection: {
-    type: Schema.Types.ObjectId,
-    ref: "Gallery"
   }
 })
 
 const gallerySchema = new mongoose.Schema({
-  name: {
-    type: String
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
   },
-  image: {
-    type: String
-  },
-  date: {
-    type: Date
-  }
+  collectionImages: [{
+    title: String,
+    imageUrl: String,
+    date: {
+      type: Date,
+      default: Date.now()
+    }
+  }]
 })
 
 module.exports = {

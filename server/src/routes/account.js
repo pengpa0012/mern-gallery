@@ -38,7 +38,7 @@ router.post("/login", async (req, res) => {
 })
 
 router.get("/getUsers", verifyJWT, async (req, res) => {
-  const result = await Users.find()
+  const result = await User.find()
 
   if(result) {
     res.status(200).send({users: result})
