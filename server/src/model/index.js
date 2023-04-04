@@ -18,8 +18,14 @@ const gallerySchema = new mongoose.Schema({
     ref: "User"
   },
   collectionImages: [{
-    title: String,
-    imageUrl: String,
+    title: {
+      type: String,
+      required: true
+    },
+    imageUrl: {
+      type: String,
+      required: true
+    },
     date: {
       type: Date,
       default: Date.now()
